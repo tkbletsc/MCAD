@@ -55,6 +55,20 @@ module ball_groove2(pitch, length, diameter, ball_radius, slices=200){
     }
 }
 
+module ball_groove3(pitch, length, diameter, ball_radius, slices=200){
+    rotations = length/pitch;
+    radius=diameter/2;
+    offset = length/slices;
+    union(){
+        for (i = [1:slices]) {
+            hull() {
+                translate(helix_curve(pitch, radius, (i-1)*offset)) sphere(ball_radius, $fa=5, $fs=1);
+                translate(helix_curve(pitch, radius, i*offset)) sphere(ball_radius, $fa=5, $fs=1);
+            }
+        }
+    }
+}
+
 module test_ball_groove2(){translate([0, 0, 0]) ball_groove2(100, 300, 100, 10);}
 
 module ball_screw(pitch, length, bearing_radius=2) {
